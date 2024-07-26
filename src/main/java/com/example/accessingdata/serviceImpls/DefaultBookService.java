@@ -6,10 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.accessingdata.models.Book;
 import com.example.accessingdata.repositories.BookRepository;
-import com.example.accessingdata.services.BookService;
 
 @Service
-public class DefaultBookService implements BookService {
+public class DefaultBookService implements com.example.accessingdata.services.Service<Long, Book> {
 
     private final BookRepository repository;
 
@@ -21,6 +20,13 @@ public class DefaultBookService implements BookService {
     public List<Book> findAll() {
         List<Book> books = (List<Book>) repository.findAll();
         return books;
+    }
+
+    @Override
+    public Book findById(Long id) {
+        var resBook = repository.findById(id);
+        var book = resBook.orElseThrow();
+        return book;
     }
 
 }

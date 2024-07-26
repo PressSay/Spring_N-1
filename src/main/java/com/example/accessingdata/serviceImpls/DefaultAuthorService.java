@@ -6,10 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.accessingdata.models.Author;
 import com.example.accessingdata.repositories.AuthorRepository;
-import com.example.accessingdata.services.AuthorService;
 
 @Service
-public class DefaultAuthorService implements AuthorService {
+public class DefaultAuthorService implements com.example.accessingdata.services.Service<Long, Author> {
 
     private final AuthorRepository repository;
 
@@ -21,6 +20,13 @@ public class DefaultAuthorService implements AuthorService {
     public List<Author> findAll() {
         List<Author> authors = (List<Author>) repository.findAll();
         return authors;
+    }
+
+    @Override
+    public Author findById(Long id) {
+        var resAuthor = repository.findById(id);
+        var author = resAuthor.orElseThrow();
+        return author;
     }
     
 }

@@ -6,10 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.accessingdata.models.Library;
 import com.example.accessingdata.repositories.LibraryRepository;
-import com.example.accessingdata.services.LibraryService;
 
 @Service
-public class DefaultLibraryService implements LibraryService {
+public class DefaultLibraryService implements com.example.accessingdata.services.Service<Long, Library> {
 
     private final LibraryRepository repository;
 
@@ -21,6 +20,13 @@ public class DefaultLibraryService implements LibraryService {
     public List<Library> findAll() {
         List<Library> addresses = (List<Library>) repository.findAll();
         return addresses;
+    }
+
+    @Override
+    public Library findById(Long id) {
+        var resLibrary = repository.findById(id);
+        var Library = resLibrary.orElseThrow();
+        return Library;
     }
     
 }

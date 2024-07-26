@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+
 import com.example.accessingdata.models.GroupAuthor;
 import com.example.accessingdata.repositories.GroupRepository;
-import com.example.accessingdata.services.GroupService;
 
 @Service
-public class DefaultGroupService implements GroupService {
+public class DefaultGroupService implements com.example.accessingdata.services.Service<Long, GroupAuthor> {
 
     private final GroupRepository repository;
 
@@ -21,6 +21,13 @@ public class DefaultGroupService implements GroupService {
     public List<GroupAuthor> findAll() {
         List<GroupAuthor> groups = (List<GroupAuthor>) repository.findAll();
         return groups;
+    }
+
+    @Override
+    public GroupAuthor findById(Long id) {
+        var resGroupAuthor = repository.findById(id);
+        var groupAuthor = resGroupAuthor.orElseThrow();
+        return groupAuthor;
     }
     
 }

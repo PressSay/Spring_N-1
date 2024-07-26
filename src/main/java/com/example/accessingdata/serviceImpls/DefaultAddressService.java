@@ -6,10 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.accessingdata.models.Address;
 import com.example.accessingdata.repositories.AddressRepository;
-import com.example.accessingdata.services.AddressService;
 
 @Service
-public class DefaultAddressService implements AddressService {
+public class DefaultAddressService implements com.example.accessingdata.services.Service<Long, Address> {
 
     private final AddressRepository repository;
 
@@ -21,6 +20,13 @@ public class DefaultAddressService implements AddressService {
     public List<Address> findAll() {
         List<Address> addresses = (List<Address>) repository.findAll();
         return addresses;
+    }
+
+    @Override
+    public Address findById(Long id) {
+        var resAddress = repository.findById(id);
+        var address = resAddress.orElseThrow();
+        return address;
     }
     
 }
